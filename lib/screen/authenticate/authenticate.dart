@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shibusindia/authenticate/login.dart';
-import 'package:shibusindia/authenticate/register.dart';
+import 'package:shibusindia/screen/authenticate/login.dart';
+import 'package:shibusindia/screen/authenticate/register.dart';
 
 class Authenticate extends StatefulWidget {
   @override
