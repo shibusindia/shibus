@@ -17,7 +17,7 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 5));
+        AnimationController(vsync: this, duration: Duration(seconds: 3));
 
     animateRotate = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
@@ -56,17 +56,32 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: 100.0,
       height: 100.0,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          colors: [
+            Color(0xff20639b),
+            Color(0xff3caea3),
+          ],
+        ),
+      ),
       child: Center(
         child: RotationTransition(
           turns: animateRotate,
           child: Stack(
             children: <Widget>[
               Dot(
-                color: Colors.black12,
+                color: Colors.white,
                 radius: 30.0,
               ),
               Transform.translate(
@@ -150,7 +165,6 @@ class Dot extends StatelessWidget {
       child: Container(
         width: this.radius,
         height: this.radius,
-        color: Colors.white,
         decoration: BoxDecoration(
           color: this.color,
           shape: BoxShape.circle,

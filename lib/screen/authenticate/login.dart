@@ -145,8 +145,8 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             Padding(
                               padding: EdgeInsets.only(
-                                top: _minpad *4,
-                                bottom: _minpad *4,
+                                top: _minpad * 4,
+                                bottom: _minpad * 4,
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -166,11 +166,19 @@ class _LoginPageState extends State<LoginPage> {
                                       borderRadius: BorderRadius.circular(50.0),
                                     ),
                                     onPressed: () async {
-                                      displaySnackBar(context);
+                                      setState(() {
+                                        loading=true;
+                                      });
                                       dynamic result = await _auth.login(
                                           _emailController.text.toString(),
                                           _passwordController.text.toString());
-                                      if (result == null) {}
+
+                                      if (result == null) {
+                                        displaySnackBar(context);
+                                        setState(() {
+                                          loading=false;
+                                        });
+                                      }
                                     },
                                   ),
                                   SizedBox(
