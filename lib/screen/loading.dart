@@ -19,7 +19,7 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
     controller =
         AnimationController(vsync: this, duration: Duration(seconds: 5));
 
-    animateRotate = Tween<double>(begin: 0.0, end: 0.0).animate(
+    animateRotate = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: controller,
         curve: Interval(0.0, 1.0, curve: Curves.linear),
@@ -66,7 +66,7 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
           child: Stack(
             children: <Widget>[
               Dot(
-                color: Colors.grey,
+                color: Colors.black12,
                 radius: 30.0,
               ),
               Transform.translate(
@@ -150,6 +150,7 @@ class Dot extends StatelessWidget {
       child: Container(
         width: this.radius,
         height: this.radius,
+        color: Colors.white,
         decoration: BoxDecoration(
           color: this.color,
           shape: BoxShape.circle,
