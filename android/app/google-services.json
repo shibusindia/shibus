@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "640694214286",
+    "firebase_url": "https://shibusindia.firebaseio.com",
+    "project_id": "shibusindia",
+    "storage_bucket": "shibusindia.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640694214286:android:a9c335061cf481ae5473df",
+        "android_client_info": {
+          "package_name": "com.example.shibusindia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640694214286-u877cioc8s86l97k07fvf70h03lfdkju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDS5jYFU6GuPo1TYzDczyx02yh6B20ryv4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640694214286-u877cioc8s86l97k07fvf70h03lfdkju.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
