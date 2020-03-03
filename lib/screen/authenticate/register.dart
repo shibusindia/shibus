@@ -277,10 +277,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                     _passwordController.text.toString());
                                   
                                 if (result == null) {
-                                  Scaffold.of(context).removeCurrentSnackBar();
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text('Invalid Credential'),
-                                  ));
                                   setState(() {
                                     loading = false;
                                   });

@@ -173,12 +173,6 @@ class _LoginPageState extends State<LoginPage> {
                                         _passwordController.text.toString());
 
                                     if (result == null) {
-                                      Scaffold.of(context)
-                                          .removeCurrentSnackBar();
-                                      Scaffold.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Text('Invalid Credential'),
-                                      ));
                                       setState(() {
                                         loading = false;
                                       });
