@@ -13,7 +13,7 @@ class _RegisterPageState extends State<RegisterPage> {
   AuthService _auth = AuthService();
   final _minpad = 5.0;
   bool isPhone = true;
-  
+  bool loading = false;
   bool _showPassword = false;
   bool _showConfirm = false;
   bool _isPassword = true;
@@ -267,10 +267,26 @@ class _RegisterPageState extends State<RegisterPage> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50.0),
                             ),
-                            onPressed: () {
+                            onPressed: () async {
                               if (_isPassword && _isEmailValid) {
-                                _auth.register(_emailController.text.toString(),
+                                setState(() {
+                                  loading = true;
+                                });
+                                dynamic result = await _auth.register(
+                                    _emailController.text.toString(),
                                     _passwordController.text.toString());
+                                  
+                                if (result == null) {
+                                  Scaffold.of(context).removeCurrentSnackBar();
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                    content: Text('Invalid Credential'),
+                                  ));
+                                  setState(() {
+                                    loading = false;
+                                  });
+                                  
+                                }
+                                
                               }
                             },
                           ),
