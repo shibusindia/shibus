@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shibusindia/animation/FadeAnimation.dart';
 import 'package:shibusindia/screen/loading.dart';
 import 'package:shibusindia/services/auth.dart';
+import 'package:shimmer/shimmer.dart';
 
 class LoginPage extends StatefulWidget {
   final Function toggleView;
@@ -167,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     onPressed: () async {
                                       setState(() {
-                                        loading=true;
+                                        loading = true;
                                       });
                                       dynamic result = await _auth.login(
                                           _emailController.text.toString(),
@@ -176,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
                                       if (result == null) {
                                         displaySnackBar(context);
                                         setState(() {
-                                          loading=false;
+                                          loading = false;
                                         });
                                       }
                                     },
@@ -240,12 +241,16 @@ class _LoginPageState extends State<LoginPage> {
           image,
           FadeAnimation(
             1.2,
-            Text(
-              'Shibus India'.toUpperCase(),
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 27.0,
+            Shimmer.fromColors(
+              baseColor: Colors.white,
+              highlightColor: Color(0xff3caea3),
+              child: Text(
+                'Shibus India'.toUpperCase(),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 27.0,
+                ),
               ),
             ),
           ),
