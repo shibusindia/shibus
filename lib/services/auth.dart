@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shibusindia/model/user.dart';
+import 'package:shibusindia/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -29,6 +30,14 @@ class AuthService {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
+
+      await DatabaseService(uid: user.uid).updateGeneralData(
+          email: email,
+          password: password,
+          phone: 'null',
+          apikey: 'null',
+          secretkey: 'null');
+
       return _userFromfirebaseUser(user);
     } catch (e) {
       print(e.toString());
