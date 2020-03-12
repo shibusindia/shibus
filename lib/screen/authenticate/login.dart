@@ -25,6 +25,15 @@ class _LoginPageState extends State<LoginPage> {
   String email = "";
   String password = "";
   bool isLoggedIn = false;
+
+
+    @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return loading

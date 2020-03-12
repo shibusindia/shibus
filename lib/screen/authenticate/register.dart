@@ -22,10 +22,16 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _apikeyController = TextEditingController();
-  final _secretkeyController = TextEditingController();
   bool _isEmailValid = true;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _confirmPasswordController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -97,41 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     }
                                   }),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top: _minpad * 3,
-                                left: _minpad * 3,
-                                right: _minpad * 3,
-                              ),
-                              child: TextField(
-                                controller: _phoneController,
-                                keyboardType: TextInputType.number,
-                                maxLength: 10,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(50.0),
-                                  ),
-                                  labelText: 'Phone Number',
-                                  prefixText: '+91',
-                                  prefixIcon: Icon(
-                                    Icons.phone,
-                                  ),
-                                  errorText:
-                                      isPhone ? null : 'Invalid Phone Number',
-                                ),
-                                onChanged: (String value) {
-                                  if (value.length != 10) {
-                                    setState(() {
-                                      isPhone = false;
-                                    });
-                                  } else {
-                                    setState(() {
-                                      isPhone = true;
-                                    });
-                                  }
-                                },
-                              ),
-                            ),
+                            
                             Padding(
                               padding: EdgeInsets.only(
                                 top: _minpad * 3,
@@ -219,40 +191,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                     });
                                   }
                                 },
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top: _minpad * 3,
-                                left: _minpad * 3,
-                                right: _minpad * 3,
-                              ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(50.0),
-                                  ),
-                                  labelText: 'Binance API Key',
-                                  prefixIcon: Icon(Icons.vpn_key),
-                                ),
-                                controller: _apikeyController,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top: _minpad * 3,
-                                left: _minpad * 3,
-                                right: _minpad * 3,
-                              ),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(50.0),
-                                  ),
-                                  labelText: 'Binance Secret Key',
-                                  prefixIcon: Icon(Icons.security),
-                                ),
-                                controller: _secretkeyController,
                               ),
                             ),
                             Padding(
