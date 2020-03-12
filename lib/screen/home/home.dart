@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shibusindia/services/auth.dart';
+import 'package:shibusindia/screen/home/account_tab.dart';
+import 'package:shibusindia/screen/home/order_tab.dart';
+import 'package:shibusindia/screen/home/settings_tab.dart';
+import 'package:shibusindia/screen/home/telegram_tab.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -7,52 +11,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final AuthService _auth = AuthService();
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     final tabPages = <Widget>[
-      Center(
-        child: Icon(
-          Icons.home,
-          size: 64.0,
-          color: Colors.redAccent,
-        ),
-      ),
-      Center(
-        child: Icon(
-          Icons.home,
-          size: 64.0,
-          color: Colors.redAccent,
-        ),
-      ),
-      Center(
-        child: Icon(
-          Icons.home,
-          size: 64.0,
-          color: Colors.redAccent,
-        ),
-      ),
-      Center(
-        child: FlatButton.icon(
-          onPressed: () => _auth.signOut(),
-          icon: Icon(Icons.all_out),
-          label: Text('signout'),
-        ),
-      ),
+      Telegram(),
+      Accounts(),
+      Orders(),
+      Settings(),
     ];
     final bottomNavBarItems = <BottomNavigationBarItem>[
       BottomNavigationBarItem(
-        icon: Icon(Icons.home),
-        title: Text('home'),
+        icon: Icon(
+          Icons.home,
+        ),
+        title: Text(
+          'Home',
+          style: TextStyle(),
+        ),
+        activeIcon: Icon(
+          Icons.home,
+        ),
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.send),
-        title: Text('home'),
+        icon: Icon(
+          Icons.person,
+        ),
+        title: Text(
+          'Account',
+        ),
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.account_balance_wallet),
-        title: Text('home'),
+        icon: Icon(Icons.credit_card),
+        title: Text('Orders'),
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.settings),
@@ -62,8 +53,12 @@ class _HomePageState extends State<HomePage> {
     assert(tabPages.length == bottomNavBarItems.length);
     final bottomNavBar = BottomNavigationBar(
       items: bottomNavBarItems,
+      elevation: 10.0,
       currentIndex: _currentIndex,
       type: BottomNavigationBarType.fixed,
+      backgroundColor: Colors.black87,
+      unselectedItemColor: Colors.white,
+      selectedItemColor: Color(0xff3caea3),
       onTap: (int index) {
         setState(() {
           _currentIndex = index;
@@ -72,35 +67,22 @@ class _HomePageState extends State<HomePage> {
       },
     );
     return Scaffold(
+      
+      backgroundColor: Colors.black12,
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
+        
+        backgroundColor: Colors.black,
         title: Text('Shibus'.toUpperCase()),
         actions: <Widget>[
-          FlatButton.icon(
-            onPressed: () => print('help button pressed'),
-            icon: Icon(Icons.help_outline),
-            label: Text('Help'),
-          ),
-          FlatButton.icon(
+          IconButton(
             onPressed: () => print('on /off pressed'),
             icon: Icon(Icons.power_settings_new),
-            label: Text('on/off'),
+            tooltip: 'Cloud On/Off',
           ),
         ],
       ),
       body: tabPages[_currentIndex],
       bottomNavigationBar: bottomNavBar,
     );
-
-    //Container(
-    //   child: Center(
-    //     child: RaisedButton(
-    //       onPressed: () {
-    //         _auth.signOut();
-    //       },
-    //       child: Text('signOut'),
-    //     ),
-    //   ),
-    // );
   }
 }

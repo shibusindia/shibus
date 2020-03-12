@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:shibusindia/screen/wrapper.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +15,7 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       child: MaterialApp(
         title: 'Shibus',
+        theme: ThemeData(canvasColor: Colors.transparent),
         home: Wrapper(),
         debugShowCheckedModeBanner: false,
       ),

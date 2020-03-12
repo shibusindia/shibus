@@ -26,8 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   String password = "";
   bool isLoggedIn = false;
 
-
-    @override
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -176,18 +175,24 @@ class _LoginPageState extends State<LoginPage> {
                                       borderRadius: BorderRadius.circular(50.0),
                                     ),
                                     onPressed: () async {
-                                      setState(() {
-                                        loading = true;
-                                      });
-                                      dynamic result = await _auth.login(
-                                          _emailController.text.toString(),
-                                          _passwordController.text.toString());
-
-                                      if (result == null) {
-                                        displaySnackBar(context);
+                                      if (this._isEmailValid &&
+                                          this.isPasswordValid) {
                                         setState(() {
-                                          loading = false;
+                                          loading = true;
                                         });
+                                        dynamic result = await _auth.login(
+                                            _emailController.text.toString(),
+                                            _passwordController.text
+                                                .toString());
+
+                                        if (result == null) {
+                                          setState(() {
+                                            loading = false;
+                                          });
+                                          displaySnackBar(context);
+                                        }
+                                      } else {
+                                        displaySnackBar(context);
                                       }
                                     },
                                   ),
