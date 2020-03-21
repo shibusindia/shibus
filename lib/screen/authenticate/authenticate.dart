@@ -25,9 +25,4 @@ class _AuthenticateState extends State<Authenticate> {
   }
 }
 
-// class Authenticate extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return LoginPage();
-//   }
-// }
+

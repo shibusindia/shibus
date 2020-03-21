@@ -42,10 +42,10 @@ class _LoginPageState extends State<LoginPage> {
               builder: (context) => Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    begin: Alignment.topCenter,
+                    begin: Alignment.bottomCenter,
                     colors: [
-                      Color(0xff20639b),
-                      Color(0xff3caea3),
+                      Colors.grey.shade100,
+                      Colors.black,
                     ],
                   ),
                 ),
@@ -169,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    color: Colors.red,
+                                    color: Colors.black54,
                                     textColor: Colors.white,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(50.0),
@@ -177,22 +177,26 @@ class _LoginPageState extends State<LoginPage> {
                                     onPressed: () async {
                                       if (this._isEmailValid &&
                                           this.isPasswordValid) {
-                                        setState(() {
-                                          loading = true;
-                                        });
-                                        dynamic result = await _auth.login(
-                                            _emailController.text.toString(),
-                                            _passwordController.text
-                                                .toString());
-
-                                        if (result == null) {
+                                        if (_emailController.text == '' ||
+                                            _passwordController.text == '') {
+                                          displaySnackBar(context,'Email or Password is Empty');
+                                        } else {
                                           setState(() {
-                                            loading = false;
+                                            loading = true;
                                           });
-                                          displaySnackBar(context);
+                                          dynamic result = await _auth.login(
+                                              _emailController.text.toString(),
+                                              _passwordController.text
+                                                  .toString());
+
+                                          if (result == null) {
+                                            setState(() {
+                                              loading = false;
+                                            });
+                                          }
                                         }
                                       } else {
-                                        displaySnackBar(context);
+                                        displaySnackBar(context,'Invalid Credentials');
                                       }
                                     },
                                   ),
@@ -209,7 +213,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     splashColor: Colors.white30,
                                     color: Colors.white,
-                                    textColor: Colors.red,
+                                    textColor: Colors.black54,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(50.0),
                                     ),
@@ -231,9 +235,9 @@ class _LoginPageState extends State<LoginPage> {
           );
   }
 
-  displaySnackBar(BuildContext context) {
+  displaySnackBar(BuildContext context,String str) {
     final snackbar = SnackBar(
-      content: Text('Invalid Credentials'),
+      content: Text('$str'),
       action: SnackBarAction(
           label: 'Ok', onPressed: Scaffold.of(context).hideCurrentSnackBar),
     );
@@ -256,8 +260,8 @@ class _LoginPageState extends State<LoginPage> {
           FadeAnimation(
             1.2,
             Shimmer.fromColors(
-              baseColor: Colors.white,
-              highlightColor: Color(0xff3caea3),
+              baseColor: Colors.black,
+              highlightColor: Colors.grey.shade100,
               child: Text(
                 'Shibus India'.toUpperCase(),
                 style: TextStyle(

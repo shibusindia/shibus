@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shibusindia/animation/FadeAnimation.dart';
 import 'package:shibusindia/screen/loading.dart';
 import 'package:shibusindia/services/auth.dart';
+import 'package:shimmer/shimmer.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function toggleView;
@@ -19,6 +20,8 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _showConfirm = false;
   bool _isPassword = true;
   bool _isConfirm = true;
+  Color passColor = Colors.red;
+  Color emailColor = Colors.red;
   final _emailController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -32,7 +35,6 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return loading
@@ -42,10 +44,10 @@ class _RegisterPageState extends State<RegisterPage> {
               builder: (context) => Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    begin: Alignment.topCenter,
+                    begin: Alignment.bottomCenter,
                     colors: [
-                      Color(0xff20639b),
-                      Color(0xff3caea3),
+                      Colors.grey,
+                      Colors.black,
                     ],
                   ),
                 ),
@@ -103,7 +105,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                     }
                                   }),
                             ),
-                            
                             Padding(
                               padding: EdgeInsets.only(
                                 top: _minpad * 3,
@@ -210,7 +211,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       ),
                                     ),
                                     splashColor: Colors.white30,
-                                    color: Colors.red,
+                                    color: Colors.black54,
                                     textColor: Colors.white,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(50.0),
@@ -246,7 +247,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    textColor: Colors.red,
+                                    textColor: Colors.black54,
                                     color: Colors.white,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(50.0),
@@ -293,12 +294,16 @@ class _RegisterPageState extends State<RegisterPage> {
           image,
           FadeAnimation(
             1.2,
-            Text(
-              'Shibus India'.toUpperCase(),
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 27.0,
+            Shimmer.fromColors(
+              baseColor: Colors.black,
+              highlightColor: Colors.grey.shade100,
+              child: Text(
+                'Shibus India'.toUpperCase(),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 27.0,
+                ),
               ),
             ),
           ),

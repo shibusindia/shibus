@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class Orders extends StatefulWidget {
   @override
   _OrdersState createState() => _OrdersState();
@@ -30,7 +31,6 @@ class _OrdersState extends State<Orders> {
                   children: <Widget>[
                     Icon(Icons.account_balance),
                     Text('balance btc'),
-
                   ],
                 ),
               ),
