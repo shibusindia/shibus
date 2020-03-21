@@ -13,26 +13,80 @@ class _AccountsState extends State<Accounts> {
     return Scaffold(
       key: _scaffoldKey,
       body: Container(
-        height: MediaQuery.of(context).size.height / 2,
+        height: MediaQuery.of(context).size.height / 3,
         width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.all(5.0),
-        child: Card(
-          elevation: 10.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(40.0),
-            ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            colors: [
+              Color(0xff00d2ff),
+              Color(0xff3a7bd5),
+            ],
           ),
-          color: Colors.white,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text('apikey'),
-                Text('Secret key'),
-                Text('Phone No'),
-              ],
-            ),
+        ),
+        margin: EdgeInsets.all(5.0),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'User Name'.toUpperCase(),
+                    style: accountStyle(
+                      size: 25.0,
+                      weight: FontWeight.bold,
+                    ),
+                  ),
+                  Image(
+                    image: AssetImage('assets/loginlogo.png'),
+                    width: 65.0,
+                    height: 65.0,
+                  )
+                ],
+              ),
+              Text(
+                'Phone Number'.toUpperCase(),
+                style: accountStyle(
+                  size: 16.0,
+                  weight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                '+919747308327',
+                style: accountStyle(size: 12.0),
+              ),
+              
+              Text(
+                'API Key'.toUpperCase(),
+                style: accountStyle(
+                  size: 16.0,
+                  weight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                                'abcdefghijklmnopqrstuvwxyz0123456789',
+                style: accountStyle(size: 12.0),
+              ),
+              Text(
+                'Secret Key'.toUpperCase(),
+                style: accountStyle(
+                  size: 16.0,
+                  weight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'abcdefghijklmnopqrstuvwxyz0123456789',
+                style: accountStyle(size: 12.0),
+              ),
+            ],
           ),
         ),
       ),
@@ -41,9 +95,22 @@ class _AccountsState extends State<Accounts> {
         tooltip: 'Edit',
         onPressed: () => showModalBottomSheet(
             context: context, builder: (ctx) => _buildBottomSheet(ctx)),
-        child: Icon(Icons.edit,color: Colors.black,size: 25,),
+        child: Icon(
+          Icons.edit,
+          color: Colors.black,
+          size: 25,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    );
+  }
+
+  TextStyle accountStyle({double size, FontWeight weight}) {
+    return TextStyle(
+      color: Colors.white,
+      fontWeight: weight ?? FontWeight.normal,
+      fontSize: size,
+      letterSpacing: 2.0,
     );
   }
 

@@ -20,8 +20,9 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _showConfirm = false;
   bool _isPassword = true;
   bool _isConfirm = true;
-  Color passColor = Colors.red;
-  Color emailColor = Colors.red;
+  Color _passColor = Colors.grey;
+  Color _emailColor = Colors.grey;
+  Color _confirmColor = Colors.grey;
   final _emailController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -83,6 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     labelText: 'Email',
                                     prefixIcon: Icon(
                                       Icons.mail_outline,
+                                      color: _emailColor,
                                     ),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(50.0),
@@ -97,9 +99,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                         .hasMatch(value)) {
                                       setState(() {
                                         _isEmailValid = false;
+                                        _emailColor = Colors.redAccent;
                                       });
                                     } else {
                                       setState(() {
+                                        _emailColor = Colors.blueAccent;
                                         _isEmailValid = true;
                                       });
                                     }
@@ -118,6 +122,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   labelText: 'Password',
                                   prefixIcon: Icon(
                                     Icons.lock_outline,
+                                    color: _passColor,
                                   ),
                                   suffixIcon: IconButton(
                                     icon: Icon(
@@ -140,10 +145,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                 onChanged: (String value) {
                                   if (value.length < 8 || value == '') {
                                     setState(() {
+                                      _passColor = Colors.red;
                                       this._isPassword = false;
                                     });
                                   } else {
                                     setState(() {
+                                      _passColor = Colors.blue;
                                       this._isPassword = true;
                                     });
                                   }
@@ -166,14 +173,16 @@ class _RegisterPageState extends State<RegisterPage> {
                                   labelText: 'Confirm Password',
                                   prefixIcon: Icon(
                                     Icons.lock_outline,
+                                    color: _confirmColor,
                                   ),
                                   errorText: _isConfirm
                                       ? null
                                       : 'Password not matched',
                                   suffixIcon: IconButton(
-                                    icon: Icon(
-                                      Icons.remove_red_eye,
-                                    ),
+                                    icon: Icon(Icons.remove_red_eye,
+                                        color: this._showConfirm
+                                            ? Colors.blue
+                                            : Colors.grey),
                                     onPressed: () {
                                       setState(() => this._showConfirm =
                                           !this._showConfirm);
@@ -184,10 +193,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                   if (_confirmPasswordController.text !=
                                       _passwordController.text) {
                                     setState(() {
+                                      _confirmColor = Colors.redAccent;
                                       this._isConfirm = false;
                                     });
                                   } else {
                                     setState(() {
+                                      _confirmColor = Colors.blueAccent;
                                       this._isConfirm = true;
                                     });
                                   }
