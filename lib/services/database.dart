@@ -69,10 +69,7 @@ class DatabaseService {
         isTelegramConnect: snapshot.data['isTelegramConnect']);
   }
 
-  // streaming data in firestore
-  // Stream<Config> get client {
-  //   return userConfig.document(uid).snapshots().map(_configSnapshot);
-  // }
+  
 
   Stream<UserData> get userdata {
     return userConfig.document(uid).snapshots().map(_userDatasnapshot);
