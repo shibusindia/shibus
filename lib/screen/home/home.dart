@@ -4,7 +4,6 @@ import 'package:shibusindia/screen/home/order_tab.dart';
 import 'package:shibusindia/screen/home/settings_tab.dart';
 import 'package:shibusindia/screen/home/telegram_tab.dart';
 
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -62,15 +61,12 @@ class _HomePageState extends State<HomePage> {
       onTap: (int index) {
         setState(() {
           _currentIndex = index;
-          print(_currentIndex);
         });
       },
     );
     return Scaffold(
-      
       backgroundColor: Colors.black12,
       appBar: AppBar(
-        
         backgroundColor: Colors.black,
         title: Text('Shibus'.toUpperCase()),
         actions: <Widget>[

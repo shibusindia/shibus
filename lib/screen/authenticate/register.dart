@@ -236,12 +236,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                             _emailController.text.toString(),
                                             _passwordController.text
                                                 .toString());
-
                                         if (result == null) {
                                           setState(() {
                                             loading = false;
                                           });
-                                          displaySnackBar(context);
                                         }
                                       }
                                     },

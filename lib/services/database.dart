@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shibusindia/model/user.dart';
 
 class DatabaseService {
   final String uid;
   DatabaseService({this.uid});
 
-  final CollectionReference userData = Firestore.instance.collection('Users');
+  final CollectionReference userConfig =
+      Firestore.instance.collection('clients');
   // final CollectionReference channel = Firestore.instance.collection('Channel');
 
   // Future updateChannelSetting({
@@ -40,19 +42,44 @@ class DatabaseService {
   //   });
   // }
 
-  Future updateGeneralData({
-    String email,
-    String password,
+  Future configData({
+    String username,
     String phone,
     String apikey,
     String secretkey,
   }) async {
-    return await userData.document(uid).setData({
-      'email': email,
-      'password': password,
-      'apiKey': apikey,
-      'secretKey': secretkey,
-      'phoneNumber': phone
+    return await userConfig.document(uid).setData({
+      'username': username,
+      'apikey': apikey,
+      'secretkey': secretkey,
+      'phonenumber': phone
     });
+  }
+
+  // Config _configSnapshot(DocumentSnapshot snapshot) {
+  //   return Config(
+  //     apikey: snapshot.data['apikey'] ,
+  //     username: snapshot.data['username'] ,
+  //     phonenumber: snapshot.data['phonenumber'] ,
+  //     secretkey: snapshot.data['seceretkey'],
+  //   );
+  // }
+
+  UserData _userDatasnapshot(DocumentSnapshot snapshot) {
+    return UserData(
+        uid: uid,
+        username: snapshot.data['username'],
+        apikey: snapshot.data['apikey'],
+        secretkey: snapshot.data['secretkey'],
+        phonenumber: snapshot.data['phonenumber']);
+  }
+
+  // streaming data in firestore
+  // Stream<Config> get client {
+  //   return userConfig.document(uid).snapshots().map(_configSnapshot);
+  // }
+
+  Stream<UserData> get userdata {
+    return userConfig.document(uid).snapshots().map(_userDatasnapshot);
   }
 }
