@@ -137,7 +137,6 @@ class _AccountBottomState extends State<AccountBottom> {
                           secretkey: _currentSecretkey ?? configData.secretkey,
                           username: _currentUsername ?? configData.username,
                           phone: _currentPhoneNumber ?? configData.phonenumber,
-                          
                         );
                         Navigator.pop(context);
                       }

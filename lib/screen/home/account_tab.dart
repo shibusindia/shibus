@@ -13,7 +13,6 @@ class Accounts extends StatefulWidget {
 class _AccountsState extends State<Accounts> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String _pin;
-  bool _approved = false;
   final _formkey = GlobalKey<FormState>();
 
   @override
@@ -82,12 +81,8 @@ class _AccountsState extends State<Accounts> {
                           '+91${configData.phonenumber}',
                           style: accountStyle(size: 12.0),
                         ),
-                        Icon(
-                          Icons.check_circle_outline,
-                          color: configData.isTelegramConnect ?? _approved
-                              ? Colors.greenAccent
-                              : Colors.black54,
-                        ),
+                        Icon(Icons.check_circle_outline,
+                            color: Colors.greenAccent),
                         GestureDetector(
                           child: Text(
                             'Connect  Telegram'.toUpperCase(),
@@ -130,11 +125,9 @@ class _AccountsState extends State<Accounts> {
                                 ),
                                 actions: <Widget>[
                                   FlatButton(
-                                    onPressed: () {
+                                    onPressed: () async {
                                       if (_formkey.currentState.validate()) {
-                                        setState(() {
-                                          _approved = true;
-                                        });
+                                        print(configData.phonenumber);
                                         Navigator.pop(context, _pin);
                                       }
                                     },

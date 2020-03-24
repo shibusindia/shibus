@@ -14,11 +14,20 @@ class _AddChannelState extends State<AddChannel> {
     return Form(
         key: _formkey,
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            Text(
+              'Add Your Favourite Telegram Channels',
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 14.0,
+              ),
+            ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
               child: TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Channel Name',

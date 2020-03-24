@@ -8,7 +8,7 @@ class Telegram extends StatefulWidget {
 }
 
 class _TelegramState extends State<Telegram> {
-  final _items = List<String>.generate(6, (i) => 'item ${i + 1}');
+  final _items = List<String>.generate(1, (i) => 'item ${i + 1}');
   bool _switchVal = false;
   @override
   Widget build(BuildContext context) {
@@ -19,6 +19,7 @@ class _TelegramState extends State<Telegram> {
           final String item = _items[index];
           return Dismissible(
             key: Key(item),
+            direction: DismissDirection.startToEnd,
             onDismissed: (DismissDirection direction) {
               setState(() {
                 this._items.removeAt(index);
@@ -120,10 +121,27 @@ class _TelegramState extends State<Telegram> {
               ),
             ),
             background: Container(
-              color: Colors.red,
-              child: Icon(
-                Icons.delete,
-                color: Colors.white,
+              decoration: BoxDecoration(
+                  color: Colors.redAccent,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5.0),
+                  )),
+              margin: EdgeInsets.only(top: 10.0),
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.delete,
+                    size: 35.0,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    'Delete Channel',
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white),
+                  )
+                ],
               ),
               alignment: Alignment.centerLeft,
             ),
