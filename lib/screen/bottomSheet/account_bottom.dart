@@ -56,7 +56,8 @@ class _AccountBottomState extends State<AccountBottom> {
                       ),
                     ),
                     validator: (val) => val.isEmpty ? 'Enter Username' : null,
-                    onChanged: (val) => setState(() => _currentUsername = val),
+                    onChanged: (val) => setState(
+                        () => _currentUsername = val),
                   ),
                   TextFormField(
                     initialValue: configData.phonenumber,
@@ -100,7 +101,7 @@ class _AccountBottomState extends State<AccountBottom> {
                     ),
                     validator: (val) =>
                         val.isEmpty ? 'Enter the API key' : null,
-                    onChanged: (val) => setState(() => _currentApikey = val),
+                    onChanged: (val) => setState(() => _currentApikey = val.replaceAll(' ', '')),
                   ),
                   TextFormField(
                     initialValue: configData.secretkey,
@@ -120,7 +121,7 @@ class _AccountBottomState extends State<AccountBottom> {
                       ),
                     ),
                     validator: (val) => val.isEmpty ? 'Enter Secret Key' : null,
-                    onChanged: (val) => setState(() => _currentSecretkey = val),
+                    onChanged: (val) => setState(() => _currentSecretkey = val.replaceAll(' ', '')),
                   ),
                   RaisedButton(
                     color: Colors.black54,
@@ -136,6 +137,7 @@ class _AccountBottomState extends State<AccountBottom> {
                           secretkey: _currentSecretkey ?? configData.secretkey,
                           username: _currentUsername ?? configData.username,
                           phone: _currentPhoneNumber ?? configData.phonenumber,
+                          
                         );
                         Navigator.pop(context);
                       }

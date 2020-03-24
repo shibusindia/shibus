@@ -52,7 +52,7 @@ class DatabaseService {
       'username': username,
       'apikey': apikey,
       'secretkey': secretkey,
-      'phonenumber': phone
+      'phonenumber': phone,
     });
   }
 

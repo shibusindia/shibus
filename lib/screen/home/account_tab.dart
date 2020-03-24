@@ -12,6 +12,9 @@ class Accounts extends StatefulWidget {
 
 class _AccountsState extends State<Accounts> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  String _pin;
+  bool _approved=false;
+  final _formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class _AccountsState extends State<Accounts> {
           return Scaffold(
             key: _scaffoldKey,
             body: Container(
-              height: MediaQuery.of(context).size.height / 3,
+              height: MediaQuery.of(context).size.height / 2.6,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
@@ -73,6 +76,7 @@ class _AccountsState extends State<Accounts> {
                       ),
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
                           '+91${configData.phonenumber}',
@@ -80,8 +84,82 @@ class _AccountsState extends State<Accounts> {
                         ),
                         Icon(
                           Icons.check_circle_outline,
-                          color: Colors.lightGreenAccent,
+                          color:_approved? Colors.greenAccent:Colors.black54,
                         ),
+                        GestureDetector(
+                          child: Text(
+                            'Connect  Telegram'.toUpperCase(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 13.0,
+                                decoration: TextDecoration.underline),
+                          ),
+                          onTap: () async {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Enter you Telegram Pin'),
+                                content: Form(
+                                  key: _formkey,
+                                  child: TextFormField(
+                                    
+                      
+                                    decoration: InputDecoration(
+                                      labelText: 'Telegram Pin',
+                                      prefixIcon: Icon(
+                                        Icons.vpn_key,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 0.0, vertical: 0.0),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.white, width: 2.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30.0),
+                                        borderSide: BorderSide(
+                                            color: Colors.blue, width: 2.0),
+                                      ),
+                                    ),
+                                    validator: (val) =>
+                                        val.isEmpty ? 'Enter the Pin' : null,
+                                    onChanged: (val) =>
+                                        setState(() => _pin = val),
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    onPressed: () {
+                                      if (_formkey.currentState.validate()) {
+                                        setState(() {
+                                          _approved=true;
+                                        });
+                                        Navigator.pop(context, _pin);
+                                        
+                                      }
+                                    },
+                                    child: Text('Confirm'),
+                                  ),
+                                ],
+                              ),
+                            ).then((onValue) {
+                              if (onValue != null) {
+                                Scaffold.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Connected'),
+                                    action: SnackBarAction(
+                                      label: 'OK',
+                                      onPressed: () {
+                                        
+                                      },
+                                    ),
+                                  ),
+                                );
+                              }
+                            });
+                          },
+                        )
                       ],
                     ),
                     Text(
@@ -106,6 +184,22 @@ class _AccountsState extends State<Accounts> {
                       configData.secretkey,
                       style: accountStyle(size: 12.0),
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        RaisedButton(
+                          shape: CircleBorder(),
+                          color: Colors.black45,
+                          elevation: 5.0,
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                            size: 20.0,
+                          ),
+                          onPressed: () => print('binance conect'),
+                        )
+                      ],
+                    )
                   ],
                 ),
               ),
