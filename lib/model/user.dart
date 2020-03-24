@@ -9,7 +9,13 @@ class UserData {
   final String phonenumber;
   final String apikey;
   final String secretkey;
+  final bool isTelegramConnect;
 
   UserData(
-      {this.uid, this.username, this.phonenumber, this.apikey, this.secretkey});
+      {this.uid,
+      this.username,
+      this.phonenumber,
+      this.apikey,
+      this.secretkey,
+      this.isTelegramConnect});
 }

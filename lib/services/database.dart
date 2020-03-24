@@ -53,17 +53,11 @@ class DatabaseService {
       'apikey': apikey,
       'secretkey': secretkey,
       'phonenumber': phone,
+      'istelegramconnected':false,
     });
   }
 
-  // Config _configSnapshot(DocumentSnapshot snapshot) {
-  //   return Config(
-  //     apikey: snapshot.data['apikey'] ,
-  //     username: snapshot.data['username'] ,
-  //     phonenumber: snapshot.data['phonenumber'] ,
-  //     secretkey: snapshot.data['seceretkey'],
-  //   );
-  // }
+
 
   UserData _userDatasnapshot(DocumentSnapshot snapshot) {
     return UserData(
@@ -71,7 +65,8 @@ class DatabaseService {
         username: snapshot.data['username'],
         apikey: snapshot.data['apikey'],
         secretkey: snapshot.data['secretkey'],
-        phonenumber: snapshot.data['phonenumber']);
+        phonenumber: snapshot.data['phonenumber'],
+        isTelegramConnect: snapshot.data['isTelegramConnect']);
   }
 
   // streaming data in firestore

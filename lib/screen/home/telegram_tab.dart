@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shibusindia/screen/bottomSheet/addchannel_bootomsheet.dart';
 
 class Telegram extends StatefulWidget {
   @override
@@ -25,12 +26,13 @@ class _TelegramState extends State<Telegram> {
               Scaffold.of(context).showSnackBar(
                 SnackBar(
                   content: Text('Channel Removed'),
-                  action: SnackBarAction(label:'UNDO' 
-                  , onPressed: (){
-                    setState(() {
-                      this._items.insert(index, item);
-                    });
-                  }),
+                  action: SnackBarAction(
+                      label: 'UNDO',
+                      onPressed: () {
+                        setState(() {
+                          this._items.insert(index, item);
+                        });
+                      }),
                 ),
               );
             },
@@ -117,6 +119,14 @@ class _TelegramState extends State<Telegram> {
                 ],
               ),
             ),
+            background: Container(
+              color: Colors.red,
+              child: Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
+              alignment: Alignment.centerLeft,
+            ),
           );
         },
       ),
@@ -137,15 +147,15 @@ class _TelegramState extends State<Telegram> {
 
   _buildBottomSheet(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height / 2,
+      height: MediaQuery.of(context).size.height / 3,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(50.0),
-          topRight: Radius.circular(50.0),
+          topLeft: Radius.circular(40.0),
+          topRight: Radius.circular(40.0),
         ),
       ),
-      child: Center(child: Text('Add Channel')),
+      child: AddChannel(),
     );
   }
 }

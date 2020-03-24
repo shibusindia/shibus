@@ -13,7 +13,7 @@ class Accounts extends StatefulWidget {
 class _AccountsState extends State<Accounts> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String _pin;
-  bool _approved=false;
+  bool _approved = false;
   final _formkey = GlobalKey<FormState>();
 
   @override
@@ -84,7 +84,9 @@ class _AccountsState extends State<Accounts> {
                         ),
                         Icon(
                           Icons.check_circle_outline,
-                          color:_approved? Colors.greenAccent:Colors.black54,
+                          color: configData.isTelegramConnect ?? _approved
+                              ? Colors.greenAccent
+                              : Colors.black54,
                         ),
                         GestureDetector(
                           child: Text(
@@ -102,8 +104,6 @@ class _AccountsState extends State<Accounts> {
                                 content: Form(
                                   key: _formkey,
                                   child: TextFormField(
-                                    
-                      
                                     decoration: InputDecoration(
                                       labelText: 'Telegram Pin',
                                       prefixIcon: Icon(
@@ -133,10 +133,9 @@ class _AccountsState extends State<Accounts> {
                                     onPressed: () {
                                       if (_formkey.currentState.validate()) {
                                         setState(() {
-                                          _approved=true;
+                                          _approved = true;
                                         });
                                         Navigator.pop(context, _pin);
-                                        
                                       }
                                     },
                                     child: Text('Confirm'),
@@ -150,9 +149,7 @@ class _AccountsState extends State<Accounts> {
                                     content: Text('Connected'),
                                     action: SnackBarAction(
                                       label: 'OK',
-                                      onPressed: () {
-                                        
-                                      },
+                                      onPressed: () {},
                                     ),
                                   ),
                                 );
