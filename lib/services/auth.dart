@@ -32,11 +32,14 @@ class AuthService {
           email: email, password: password);
       FirebaseUser user = result.user;
       // create a record on database
-      await DatabaseService(uid: user.uid).configData(
+      await DatabaseService(uid: user.uid).setConfigData(
           username: 'username',
           secretkey: '',
           apikey: '',
-          phone: '');
+          phone: '',
+          telegramSettings: [],
+          binanceData: null);
+
       return _userFromfirebaseUser(user);
     } catch (e) {
       print(e.toString());

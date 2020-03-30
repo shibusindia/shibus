@@ -132,7 +132,7 @@ class _AccountBottomState extends State<AccountBottom> {
                     ),
                     onPressed: () async {
                       if (_key.currentState.validate()) {
-                        await DatabaseService(uid: user.uid).configData(
+                        await DatabaseService(uid: user.uid).updateConfigData(
                           apikey: _currentApikey ?? configData.apikey,
                           secretkey: _currentSecretkey ?? configData.secretkey,
                           username: _currentUsername ?? configData.username,

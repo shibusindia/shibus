@@ -1,3 +1,5 @@
+import 'package:shibusindia/model/blacklist.dart';
+
 class ChannelList {
   final String type; //private or public
   final String market; // Ask or BId
@@ -11,11 +13,11 @@ class ChannelList {
   final double
       trailingStoploss; // stoploss in traling, activate aftertake profit achieved.
   final double stoploss; //Stoploss
-  final String signal; // recent signal shown in telegram Channel
-  final String uid; // unique identifier for a user
+  final String signal;
+  final List<Blacklistwords>
+      blacklistWords; // recent signal shown in telegram Channel
   ChannelList({
     this.name,
-    this.uid,
     this.profileImage,
     this.buyPercent,
     this.isStoploss,
@@ -27,5 +29,6 @@ class ChannelList {
     this.trailingStoploss,
     this.market,
     this.type,
+    this.blacklistWords,
   });
 }

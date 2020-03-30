@@ -60,10 +60,13 @@ class _AccountsState extends State<Accounts> {
                             weight: FontWeight.bold,
                           ),
                         ),
-                        Image(
-                          image: AssetImage('assets/loginlogo.png'),
-                          width: 65.0,
-                          height: 65.0,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Image(
+                            image: AssetImage('assets/card.png'),
+                            width: 65.0,
+                            height: 65.0,
+                          ),
                         )
                       ],
                     ),

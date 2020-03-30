@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shibusindia/screen/bottomSheet/addchannel_bootomsheet.dart';
+import 'package:shibusindia/screen/bottomSheet/channel_bottom.dart';
 
 class Telegram extends StatefulWidget {
   @override
@@ -8,7 +9,8 @@ class Telegram extends StatefulWidget {
 }
 
 class _TelegramState extends State<Telegram> {
-  final _items = List<String>.generate(1, (i) => 'item ${i + 1}');
+  final _items = List<String>.generate(2, (i) => 'item ${i + 1}');
+
   bool _switchVal = false;
   @override
   Widget build(BuildContext context) {
@@ -18,8 +20,8 @@ class _TelegramState extends State<Telegram> {
         itemBuilder: (context, index) {
           final String item = _items[index];
           return Dismissible(
-            key: Key(item),
             direction: DismissDirection.startToEnd,
+            key: Key(item),
             onDismissed: (DismissDirection direction) {
               setState(() {
                 this._items.removeAt(index);
@@ -37,10 +39,20 @@ class _TelegramState extends State<Telegram> {
                 ),
               );
             },
-            child: Card(
-              color: Colors.grey.shade800,
-              margin: EdgeInsets.only(left: 8.0, right: 8.0, top: 10.0),
-              elevation: 5.0,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                colors: [
+                  Color(0xff00d2ff),
+                  Color(0xff3a7bd5),
+                ],
+              ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10.0),
+                ),
+              ),
+              margin: EdgeInsets.only(left: 8.0, right: 8.0, top: 6.0),
               child: Row(
                 children: <Widget>[
                   Padding(
@@ -64,14 +76,34 @@ class _TelegramState extends State<Telegram> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          'Signal',
-                          style: TextStyle(
-                            fontSize: 12.0,
-                            color: Colors.grey.shade100,
-                            backgroundColor: Colors.blueAccent,
-                            height: 2.0,
-                          ),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              'Signal',
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                color: Colors.white,
+                                height: 2.0,
+                              ),
+                            ),
+                            FlatButton.icon(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (ctx) =>
+                                      _channelBottomSheet(ctx, item),
+                                );
+                              },
+                              icon: Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
+                              label: Text(
+                                'Edit Channel',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
                         ),
                         Row(
                           children: <Widget>[
@@ -97,7 +129,7 @@ class _TelegramState extends State<Telegram> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 5.0),
                               child: Text(
-                                'Stoloss',
+                                'Stoploss',
                                 style: TextStyle(
                                   fontSize: 15.0,
                                   color: Colors.grey.shade200,
@@ -160,6 +192,19 @@ class _TelegramState extends State<Telegram> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    );
+  }
+
+  _channelBottomSheet(BuildContext context, String item) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40.0),
+          topRight: Radius.circular(40.0),
+        ),
+      ),
+      child: EditChannel(item),
     );
   }
 

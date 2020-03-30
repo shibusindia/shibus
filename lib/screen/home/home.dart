@@ -4,6 +4,7 @@ import 'package:shibusindia/screen/home/order_tab.dart';
 import 'package:shibusindia/screen/home/settings_tab.dart';
 import 'package:shibusindia/screen/home/telegram_tab.dart';
 
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -55,9 +56,9 @@ class _HomePageState extends State<HomePage> {
       elevation: 10.0,
       currentIndex: _currentIndex,
       type: BottomNavigationBarType.fixed,
-      backgroundColor: Colors.black87,
+      backgroundColor: Colors.black,
       unselectedItemColor: Colors.white,
-      selectedItemColor: Color(0xff3caea3),
+      selectedItemColor: Color(0xff00d2ff),
       onTap: (int index) {
         setState(() {
           _currentIndex = index;
