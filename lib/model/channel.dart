@@ -1,7 +1,6 @@
 import 'package:shibusindia/model/blacklist.dart';
 
-class ChannelList {
-  final String type; //private or public
+class ChannelsData {
   final String market; // Ask or BId
   final String name; //channel name
   final String profileImage; // telegram display picture
@@ -16,19 +15,19 @@ class ChannelList {
   final String signal;
   final List<Blacklistwords>
       blacklistWords; // recent signal shown in telegram Channel
-  ChannelList({
-    this.name,
-    this.profileImage,
+
+  ChannelsData({
+    this.blacklistWords,
     this.buyPercent,
-    this.isStoploss,
     this.isTrailing,
+    this.name,
     this.sellPercent,
+    this.isStoploss,
+    this.market,
+    this.profileImage,
     this.signal,
     this.stoploss,
     this.takeProfit,
     this.trailingStoploss,
-    this.market,
-    this.type,
-    this.blacklistWords,
   });
 }

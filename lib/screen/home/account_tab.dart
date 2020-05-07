@@ -25,6 +25,7 @@ class _AccountsState extends State<Accounts> {
             return Loader();
           }
           UserData configData = snapshot.data;
+          print(configData);
           return Scaffold(
             key: _scaffoldKey,
             body: Container(

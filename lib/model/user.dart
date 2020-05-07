@@ -1,4 +1,4 @@
-import 'package:shibusindia/model/channel.dart';
+// import 'package:shibusindia/model/channel.dart';
 
 class User {
   final String uid;
@@ -11,10 +11,10 @@ class UserData {
   final String phonenumber;
   final String apikey;
   final String secretkey;
-  final List<ChannelList> channeSetting;
+  // final List<ChannelList> telegramSetting;
 
   UserData({
-    this.channeSetting,
+    // this.telegramSetting,
     this.uid,
     this.username,
     this.phonenumber,

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+// import 'package:shibusindia/model/channel.dart';
+import 'package:shibusindia/model/user.dart';
 import 'package:shibusindia/screen/home/account_tab.dart';
 import 'package:shibusindia/screen/home/order_tab.dart';
 import 'package:shibusindia/screen/home/settings_tab.dart';
 import 'package:shibusindia/screen/home/telegram_tab.dart';
-
+import 'package:shibusindia/services/database.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -65,21 +68,24 @@ class _HomePageState extends State<HomePage> {
         });
       },
     );
-    return Scaffold(
-      backgroundColor: Colors.black12,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text('Shibus'.toUpperCase()),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () => print('on /off pressed'),
-            icon: Icon(Icons.power_settings_new),
-            tooltip: 'Cloud On/Off',
-          ),
-        ],
+    return StreamProvider<UserData>.value(
+      value: DatabaseService().userdata,
+      child: Scaffold(
+        backgroundColor: Colors.black12,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Text('Shibus'.toUpperCase()),
+          actions: <Widget>[
+            IconButton(
+              onPressed: () => print('on /off pressed'),
+              icon: Icon(Icons.power_settings_new),
+              tooltip: 'Cloud On/Off',
+            ),
+          ],
+        ),
+        body: tabPages[_currentIndex],
+        bottomNavigationBar: bottomNavBar,
       ),
-      body: tabPages[_currentIndex],
-      bottomNavigationBar: bottomNavBar,
     );
   }
 }

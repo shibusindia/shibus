@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:math' as math;
+import 'package:shibusindia/model/user.dart';
+import 'package:shibusindia/services/database.dart';
 
 class AddChannel extends StatefulWidget {
   @override
@@ -11,6 +14,7 @@ class _AddChannelState extends State<AddChannel> {
   String _channelName;
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     return Form(
         key: _formkey,
         child: Column(
@@ -62,6 +66,8 @@ class _AddChannelState extends State<AddChannel> {
               onPressed: () async {
                 if (_formkey.currentState.validate()) {
                   print(_channelName);
+                  await DatabaseService(uid: user.uid)
+                      .addChannel(name: _channelName);
                   Navigator.pop(context);
                 }
               },

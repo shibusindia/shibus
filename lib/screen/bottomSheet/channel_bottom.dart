@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shibusindia/model/channel.dart';
 
 class EditChannel extends StatefulWidget {
-  final String item;
+  final ChannelsData item;
   EditChannel(this.item);
   @override
   _EditChannelState createState() => _EditChannelState();

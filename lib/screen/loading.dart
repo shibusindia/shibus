@@ -64,16 +64,11 @@ class _LoaderState extends State<Loader> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
-height: MediaQuery.of(context).size.height,
-width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          colors: [
-            Colors.black,
-            Colors.grey,
-          ],
-        ),
+        //
+        color: Colors.black54,
       ),
       child: Center(
         child: RotationTransition(
