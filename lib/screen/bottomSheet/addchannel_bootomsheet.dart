@@ -65,9 +65,23 @@ class _AddChannelState extends State<AddChannel> {
               ),
               onPressed: () async {
                 if (_formkey.currentState.validate()) {
-                  print(_channelName);
                   await DatabaseService(uid: user.uid)
-                      .addChannel(name: _channelName);
+                      .addChannel(
+                        name: _channelName,
+                        blacklistword: 'ACHIEVED,TARGET ACHIEVED,SUCESSS',
+                        buypercent: 0.0,
+                        isstoploss: false,
+                        istrailing: false,
+                        market: 'ASK',
+                        takeprofit: 1.0,
+                        trailingstoploss: 1.0,
+                        stoploss: 3.0,
+                        quantity: 0.0012,
+                        profile: '',
+                        sellpercent: 2.0,
+                        signal: '',
+                      )
+                      .catchError((error) => print(error));
                   Navigator.pop(context);
                 }
               },

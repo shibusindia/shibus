@@ -12,7 +12,12 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: RawMaterialButton(fillColor: Colors.white,
+      child: RawMaterialButton(
+        splashColor: Colors.redAccent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+        fillColor: Colors.white,
         onPressed: () => _auth.signOut(),
         child: Text('Sign Out'),
       ),

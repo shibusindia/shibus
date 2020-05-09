@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// import 'package:shibusindia/model/channel.dart';
 import 'package:shibusindia/model/user.dart';
 import 'package:shibusindia/screen/home/account_tab.dart';
 import 'package:shibusindia/screen/home/order_tab.dart';

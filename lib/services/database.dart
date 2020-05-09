@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shibusindia/model/blacklist.dart';
 import 'package:shibusindia/model/channel.dart';
+import 'package:shibusindia/model/history.dart';
 import 'package:shibusindia/model/user.dart';
 
 class DatabaseService {
   final String uid;
   DatabaseService({this.uid});
-
   final CollectionReference userConfig =
       Firestore.instance.collection('clients');
   Future setConfigData({
@@ -20,43 +19,45 @@ class DatabaseService {
       'apikey': apikey,
       'secretkey': secretkey,
       'phonenumber': phone,
+      'isCloud': false,
     });
   }
 
   Future addChannel({
-    String market,
     String name,
-    String profileImage,
-    double buyPercent, // buy at percentage
-    double sellPercent, //sell percentage
-    bool isTrailing, // trailing on or off
-    bool isStoploss, //stoploss on or off
-    double takeProfit, // take profit associated with trailing
-    double
-        trailingStoploss, // stoploss in traling, activate aftertake profit achieved.
-    double stoploss, //Stoploss
+    String market,
+    bool isstoploss,
+    bool istrailing,
+    double quantity,
+    double stoploss,
+    double trailingstoploss,
+    double takeprofit,
+    String profile,
+    String blacklistword,
     String signal,
-    List<Blacklistwords>
-        blacklistWords, // recent signal shown in telegram Channel
+    double buypercent,
+    double sellpercent,
+
+    // recent signal shown in telegram Channel
   }) async {
     return await userConfig
         .document(uid)
         .collection('telegram')
         .document()
         .setData({
-      'channelName': name,
+      'quantity': quantity ,
+      'channelname': name,
       'markettype': market,
       'stoploss': stoploss,
-      'isstoploss': isStoploss,
-      'istrailing': isTrailing,
-      'trailingstoploss': trailingStoploss,
-      'takeProfit': takeProfit,
+      'isstoploss': isstoploss,
+      'istrailing': istrailing,
+      'takeprofit': takeprofit,
       'signal': signal,
-      'buypercent': buyPercent,
-      'sellPercent': sellPercent,
-      'traillingstoploss': trailingStoploss,
-      'blacklistword': blacklistWords,
-      'profileimage': profileImage,
+      'buypercent': buypercent,
+      'sellpercent': sellpercent,
+      'traillingstoploss': trailingstoploss,
+      'blacklistword': blacklistword,
+      'profileimage': profile,
     });
   }
 
@@ -65,49 +66,73 @@ class DatabaseService {
     String phone,
     String apikey,
     String secretkey,
+    bool isCloud,
   }) async {
     return await userConfig.document(uid).updateData({
       'username': username,
       'apikey': apikey,
       'secretkey': secretkey,
       'phonenumber': phone,
+      'isCloud': isCloud,
+    });
+  }
+
+  Future updateStoploss({
+    bool isTrailing, // trailing on or off
+    bool isStoploss,
+    String channelId,
+  }) async {
+    await userConfig
+        .document(uid)
+        .collection('telegram')
+        .document(channelId)
+        .updateData({
+      'isstoploss': isStoploss,
+      'istrailing': isTrailing,
     });
   }
 
   Future updateChannel({
+    double quantity,
+    String channelId,
     String market,
     String name,
     String profileImage,
     double buyPercent, // buy at percentage
     double sellPercent, //sell percentage
-    bool isTrailing, // trailing on or off
-    bool isStoploss, //stoploss on or off
+    //stoploss on or off
     double takeProfit, // take profit associated with trailing
     double
-        trailingStoploss, // stoploss in traling, activate aftertake profit achieved.
+        trailingstoploss, // stoploss in traling, activate aftertake profit achieved.
     double stoploss, //Stoploss
     String signal,
-    List<Blacklistwords>
-        blacklistWords, // recent signal shown in telegram Channel
+    String blacklistWords, // recent signal shown in telegram Channel
   }) async {
     return await userConfig
         .document(uid)
         .collection('telegram')
-        .document()
+        .document(channelId)
         .updateData({
-      'channelName': name,
-      'markettype': market ??'ASK',
-      'stoploss': stoploss ?? 2.0,
-      'isstoploss': isStoploss?? false,
-      'istrailing': isTrailing??true,
-      'trailingstoploss': trailingStoploss??1.0,
-      'takeProfit': takeProfit??1.0,
-      'signal': signal ??' ',
-      'buypercent': buyPercent ?? 0.0,
-      'sellPercent': sellPercent ??1.0,
-      'blacklistword': blacklistWords?? [],
-      'profileimage': profileImage ??'',
+      'quantity': quantity,
+      'channelname': name,
+      'markettype': market,
+      'stoploss': stoploss,
+      'trailingstoploss': trailingstoploss,
+      'takeprofit': takeProfit,
+      'signal': signal,
+      'buypercent': buyPercent,
+      'sellpercent': sellPercent,
+      'blacklistword': blacklistWords,
+      'profileimage': profileImage,
     });
+  }
+
+  Future deleteChannel({String channelId}) async {
+    return await userConfig
+        .document(uid)
+        .collection('telegram')
+        .document(channelId)
+        .delete();
   }
 
   UserData _userDatasnapshot(DocumentSnapshot snapshot) {
@@ -117,12 +142,14 @@ class DatabaseService {
       apikey: snapshot.data['apikey'],
       secretkey: snapshot.data['secretkey'],
       phonenumber: snapshot.data['phonenumber'],
+      iscloud: snapshot.data['isCloud'],
     );
   }
 
   List<ChannelsData> _userChannelData(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return ChannelsData(
+        channelId: doc.documentID,
         name: doc.data['channelname'],
         market: doc.data['markettype'],
         stoploss: doc.data['stoploss'],
@@ -133,21 +160,43 @@ class DatabaseService {
         profileImage: doc.data['profileimage'],
         buyPercent: doc.data['buypercent'],
         sellPercent: doc.data['sellpercent'],
+        amount: doc.data['quantity'],
         signal: doc.data['signal'],
         blacklistWords: doc.data['blacklistword'],
       );
     }).toList();
   }
 
+  List<History> _userHistoryData(QuerySnapshot snapshot) {
+    return snapshot.documents.map((doc) {
+      return History(
+        buyAmount: doc.data['buyamount'],
+        profit: doc.data['profit'],
+        quantity: doc.data['quantity'],
+        sellAmount: doc.data['sellamount'],
+        signal: doc.data['signal'],
+        status: doc.data['status'],
+      );
+    });
+  }
+
   Stream<UserData> get userdata {
     return userConfig.document(uid).snapshots().map(_userDatasnapshot);
   }
 
-  Stream<List<ChannelsData>> get channelDatas {
+  Stream<List<ChannelsData>> get getChannel {
     return userConfig
         .document(uid)
         .collection('telegram')
         .snapshots()
         .map(_userChannelData);
+  }
+
+  Stream<List<History>> get getHistory {
+    return userConfig
+        .document(uid)
+        .collection('history')
+        .snapshots()
+        .map(_userHistoryData);
   }
 }

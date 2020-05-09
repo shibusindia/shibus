@@ -44,13 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
             body: Builder(
               builder: (context) => Container(
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    colors: [
-                      Colors.grey,
-                      Colors.black,
-                    ],
-                  ),
+                  color: Colors.black54,
                 ),
                 child: ListView(
                   children: <Widget>[
@@ -304,8 +298,8 @@ class _RegisterPageState extends State<RegisterPage> {
           FadeAnimation(
             1.2,
             Shimmer.fromColors(
-              baseColor: Colors.black,
-              highlightColor: Colors.grey.shade100,
+              baseColor: Colors.white,
+              highlightColor: Colors.black12,
               child: Text(
                 'Shibus India'.toUpperCase(),
                 style: TextStyle(

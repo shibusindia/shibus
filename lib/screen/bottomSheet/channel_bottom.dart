@@ -1,20 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shibusindia/model/channel.dart';
+import 'package:shibusindia/model/user.dart';
+import 'package:shibusindia/services/database.dart';
 
 class EditChannel extends StatefulWidget {
-  final ChannelsData item;
-  EditChannel(this.item);
+  final ChannelsData channel;
+  EditChannel({this.channel});
   @override
   _EditChannelState createState() => _EditChannelState();
 }
 
 class _EditChannelState extends State<EditChannel> {
   final _formkey = GlobalKey<FormState>();
-  List<String> _blacklistwords;
-  final List<String> markets = ['ASK', 'BID'];
+  String _blacklistwords;
+  double _quantity;
+  double _buyAt;
+  double _sellAt;
+  double _trailingStoploss;
+  double _stoploss;
+  double _takeprofit;
   String _currentMarket;
+  final List<String> markets = ['ASK', 'BID'];
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     return Form(
         key: _formkey,
         child: Padding(
@@ -27,7 +38,7 @@ class _EditChannelState extends State<EditChannel> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Edit ${widget.item} Channel',
+                'Edit ${widget.channel.name} Channel',
                 style: TextStyle(
                   color: Colors.black54,
                   fontWeight: FontWeight.bold,
@@ -38,6 +49,8 @@ class _EditChannelState extends State<EditChannel> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 0.0, vertical: 2.5),
                 child: TextFormField(
+                  initialValue:
+                      widget.channel.blacklistWords.toLowerCase() ?? _blacklistwords,
                   decoration: InputDecoration(
                     labelText: 'Blacklist Words',
                     prefixIcon: Icon(
@@ -57,8 +70,7 @@ class _EditChannelState extends State<EditChannel> {
                   validator: (val) =>
                       val.isEmpty ? 'Enter Blacklist Words' : null,
                   onChanged: (val) => setState(() {
-                    _blacklistwords = val.split(',');
-                    print(_blacklistwords);
+                    _blacklistwords = val.toLowerCase();
                   }),
                 ),
               ),
@@ -66,6 +78,9 @@ class _EditChannelState extends State<EditChannel> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 0.0, vertical: 2.5),
                 child: TextFormField(
+                  initialValue:
+                      widget.channel.amount.toString() ?? _quantity.toString(),
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: 'Amount',
                     prefixIcon: Icon(
@@ -85,7 +100,7 @@ class _EditChannelState extends State<EditChannel> {
                   validator: (val) =>
                       val.isEmpty ? ' Enter the Spending Amount' : null,
                   onChanged: (val) => setState(() {
-                    print(_blacklistwords);
+                    _quantity = double.parse(val);
                   }),
                 ),
               ),
@@ -96,6 +111,9 @@ class _EditChannelState extends State<EditChannel> {
                   children: <Widget>[
                     Expanded(
                       child: TextFormField(
+                        initialValue: widget.channel.buyPercent.toString() ??
+                            _buyAt.toString(),
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           labelText: 'Buy @',
                           prefixIcon: Icon(
@@ -115,12 +133,15 @@ class _EditChannelState extends State<EditChannel> {
                           ),
                         ),
                         onChanged: (val) => setState(() {
-                          print(_blacklistwords);
+                          _buyAt = double.parse(val);
                         }),
                       ),
                     ),
                     Expanded(
                       child: TextFormField(
+                        initialValue: widget.channel.sellPercent.toString() ??
+                            _sellAt.toString(),
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           labelText: 'Sell @',
                           prefixIcon: Icon(
@@ -140,7 +161,7 @@ class _EditChannelState extends State<EditChannel> {
                           ),
                         ),
                         onChanged: (val) => setState(() {
-                          print(_blacklistwords);
+                          _sellAt = double.parse(val);
                         }),
                       ),
                     ),
@@ -154,6 +175,9 @@ class _EditChannelState extends State<EditChannel> {
                   children: <Widget>[
                     Expanded(
                       child: TextFormField(
+                        initialValue: widget.channel.stoploss.toString() ??
+                            _stoploss.toString(),
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           labelText: 'Stoploss',
                           prefixIcon: Icon(
@@ -173,7 +197,7 @@ class _EditChannelState extends State<EditChannel> {
                           ),
                         ),
                         onChanged: (val) => setState(() {
-                          print(_blacklistwords);
+                          _stoploss = double.parse(val);
                         }),
                       ),
                     ),
@@ -200,7 +224,7 @@ class _EditChannelState extends State<EditChannel> {
                                     BorderSide(color: Colors.blue, width: 2.0),
                               ),
                             ),
-                            value: _currentMarket ?? markets[0],
+                            value: _currentMarket ?? widget.channel.market,
                             items: markets.map((market) {
                               return DropdownMenuItem(
                                 value: market,
@@ -237,6 +261,9 @@ class _EditChannelState extends State<EditChannel> {
                   children: <Widget>[
                     Expanded(
                       child: TextFormField(
+                        initialValue: widget.channel.takeProfit.toString() ??
+                            _takeprofit.toString(),
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           labelText: 'Take Profit',
                           prefixIcon: Icon(
@@ -256,12 +283,16 @@ class _EditChannelState extends State<EditChannel> {
                           ),
                         ),
                         onChanged: (val) => setState(() {
-                          print(_blacklistwords);
+                          _takeprofit = double.parse(val);
                         }),
                       ),
                     ),
                     Expanded(
                       child: TextFormField(
+                        initialValue:
+                            widget.channel.trailingStoploss.toString() ??
+                                _trailingStoploss.toString(),
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           labelText: 'Trailing Stoploss',
                           prefixIcon: Icon(
@@ -281,7 +312,7 @@ class _EditChannelState extends State<EditChannel> {
                           ),
                         ),
                         onChanged: (val) => setState(() {
-                          print(_blacklistwords);
+                          _trailingStoploss = double.parse(val);
                         }),
                       ),
                     ),
@@ -289,14 +320,32 @@ class _EditChannelState extends State<EditChannel> {
                 ),
               ),
               RaisedButton(
-                color: Colors.black54,
-                textColor: Colors.white,
-                child: Text('Update'),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50.0),
-                ),
-                onPressed: () {},
-              )
+                  color: Colors.black54,
+                  textColor: Colors.white,
+                  child: Text('Update'),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50.0),
+                  ),
+                  onPressed: () async {
+                    await DatabaseService(uid: user.uid)
+                        .updateChannel(
+                      channelId: widget.channel.channelId,
+                      name: widget.channel.name,
+                      blacklistWords:
+                          _blacklistwords ?? widget.channel.blacklistWords,
+                      stoploss: _stoploss ?? widget.channel.stoploss,
+                      market: _currentMarket ?? widget.channel.market,
+                      sellPercent: _sellAt ?? widget.channel.sellPercent,
+                      buyPercent: _buyAt ?? widget.channel.buyPercent,
+                      takeProfit: _takeprofit ?? widget.channel.takeProfit,
+                      trailingstoploss:
+                          _trailingStoploss ?? widget.channel.trailingStoploss,
+                      quantity: _quantity ?? widget.channel.amount,
+                    );
+                      
+
+                    Navigator.pop(context);
+                  })
             ],
           ),
         ));

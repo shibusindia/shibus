@@ -11,14 +11,14 @@ class UserData {
   final String phonenumber;
   final String apikey;
   final String secretkey;
-  // final List<ChannelList> telegramSetting;
+  final bool iscloud;
 
   UserData({
-    // this.telegramSetting,
     this.uid,
     this.username,
     this.phonenumber,
     this.apikey,
     this.secretkey,
+    this.iscloud
   });
 }
